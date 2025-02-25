@@ -25,7 +25,7 @@ export class UsersService {
     return user.toObject() as User;
   }
 
-  async update(id: string, data: any): Promise<User> {
+  async update(id: string, data: Partial<User>): Promise<User> {
     const user = await this.userModel
       .findByIdAndUpdate(id, data, { new: true })
       .exec();

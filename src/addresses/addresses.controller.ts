@@ -8,13 +8,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { AddressesService } from './addresses.service';
+import { Address } from './schemas/address.schema';
 
 @Controller('addresses')
 export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}
 
   @Post()
-  create(@Body() data: any) {
+  create(@Body() data: { [key: string]: any; user: string }) {
     return this.addressesService.create(data);
   }
 
@@ -29,7 +30,7 @@ export class AddressesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: any) {
+  update(@Param('id') id: string, @Body() data: Partial<Address>) {
     return this.addressesService.update(id, data);
   }
 

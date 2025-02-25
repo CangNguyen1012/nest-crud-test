@@ -11,7 +11,7 @@ export class AddressesService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async create(data: any): Promise<Address> {
+  async create(data: { user: string; [key: string]: any }): Promise<Address> {
     const address = await this.addressModel.create(data);
     await this.userModel.findByIdAndUpdate(data.user, {
       $push: { addresses: address._id },
@@ -34,7 +34,7 @@ export class AddressesService {
     return address;
   }
 
-  async update(id: string, data: any): Promise<Address> {
+  async update(id: string, data: Partial<Address>): Promise<Address> {
     const address = await this.addressModel
       .findByIdAndUpdate(id, data, { new: true })
       .exec();

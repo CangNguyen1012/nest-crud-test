@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { User } from './schemas/user.schema';
 
 @Controller('users')
 export class UsersController {
@@ -29,7 +30,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: any) {
+  update(@Param('id') id: string, @Body() data: Partial<User>) {
     return this.usersService.update(id, data);
   }
 
